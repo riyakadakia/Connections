@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Front End</title>
+<style>
+  body {
+    background-color: #E0D5E6;
+  }
+  
+  .blocks {
+      padding: 5px; 
+      margin: 10px; 
+     
+      border-radius: 5px;
+      display: flex;
+      justify-content: center; /* Center the content horizontally */
+      align-items: center;
+  }
+
+
+
+  .counter {
+      font-size: 24px;
+      background-color: #fff;
+      border: 2px solid #000;
+      padding: 10px;
+      border-radius: 5px;
+  }
+  .button {
+    background-color: #F5F4F0; 
+    color: black;
+    border: 1px solid;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    border-radius: 7px
+  }
+
+  .button-counter-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px; /* Adjust as needed */
+  }
+
+  .allBlocks {
+        border: 2px solid;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center rows vertically */
+        width: 320px;/*  not responsive */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 10px; /* Adjust padding */
+    }
+  
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        flex:1;
+    }
+  
+  .title {
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  #container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+    padding: 30px;
+    margin: 30px 100px;
+  }
+
+  .resultsTextbox {
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 30px 50px;
+    background-color: #E3B5CF;
+  }
+
+  .submit_Button{
+    background-color: #E3B5CF; 
+    color: black;
+    border: 2px solid;
+    padding: 15px 32px;
+    font-size: 25px;
+  }
+
+  .answer {
+    display: none;
+  }
+
+
+  
+</style>
+</head>
+
+  
+<body>
+  <div class="title">
+    <h1>Connections 2.0</h1>
+  </div>
+
+  <div class="resultsTextbox">
+    <h3>Sort these terms into groups of 4!</h3>
+    <h3 class="groupOneAnswer answer"> Category: Environmental Problems </h3>
+    <h3 class="groupTwoAnswer answer"> Category: Sustainable Brands </h3>
+    <h3 class="groupThreeAnswer answer"> Category: Unsustainable Brands </h3>
+    <h3 class="groupFourAnswer answer"> Category: Things that can be recycled </h3>
+  </div>
+    
+  <div id="container">
+      <div class="blocks">
+          <button id="1" class="button">{{data[0].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="2" class="button">{{data[1].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="3" class="button">{{data[2].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="4" class="button">{{data[3].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="5" class="button">{{data[4].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="6" class="button">{{data[5].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="7" class="button">{{data[6].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="8" class="button">{{data[7].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="9" class="button">{{data[8].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="10" class="button">{{data[9].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="11" class="button">{{data[10].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="12" class="button">{{data[11].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="13" class="button">{{data[12].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="14" class="button">{{data[13].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="15" class="button">{{data[14].word}}</button>
+      </div>
+      <div class="blocks">
+          <button id="16" class="button">{{data[15].word}}</button>
+      </div>
+  </div>
+
+  <div class="button-counter-container">
+      <button id="submitButton" class="submit_Button">Submit</button>
+      <div class="counter">
+          <div id="counter-value">0</div>
+      </div>
+  </div>
+
+  <script src="counter.js"></script>
+  <script>
+    let counter = 0
+    const counterValue = document.getElementById('counter-value');
+    document.addEventListener("DOMContentLoaded", function() {
+      clicked_color = '#CDE5E5'
+      document.getElementById("submitButton").addEventListener("click", function() {
+        counter++;
+        counterValue.innerHTML = counter
+         //alert('entering front-end submited')  
+        // When the button is clicked, send a POST request to the backend
+          fetch('/submitted', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({})
+          })
+          .then(response => response.json())
+          .then(data => {
+              //console.log('Response from backend')
+              //console.log(data.result);
+              //alert(data.selected.length);// Log the response from the backend
+              
+                //console.log('inside if loop')
+            for (let i = 0; i < data.selected.length; i++) {
+                var div = document.getElementById((data.selected[i] + 1).toString());
+                if (data.result == 1) {
+                    div.style.backgroundColor = '#BBC9DF';
+                    var sortedGroup = data.group;
+                  //alert(sortedGroup)
+                    if (sortedGroup == 1) {
+                        document.querySelector('.groupOneAnswer').style.display = "block";
+                    } else if (sortedGroup == 2) {
+                        document.querySelector('.groupTwoAnswer').style.display = "block";
+                    } else if (sortedGroup == 3) {
+                        document.querySelector('.groupThreeAnswer').style.display = "block";
+                    } else {
+                        document.querySelector('.groupFourAnswer').style.display = "block";
+                    }
+                } else{
+                    div.style.backgroundColor = '#e7e7e7';
+                }
+            }
+              
+          })
+          
+        
+      });
+      document.getElementById("1").addEventListener("click", function() {
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 1})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+        
+          // JavaScript code to change the color of the div
+          var div = document.getElementById('1');
+          div.style.backgroundColor = clicked_color; // Change this to the color you desire
+        
+      });
+      
+      document.getElementById("2").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 2})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('2');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("3").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 3})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('3');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("4").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 4})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('4');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("5").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 5})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('5');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("6").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 6})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('6');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("7").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 7})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('7');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("8").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 8})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('8');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("9").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 9})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('9');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("10").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 10})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('10');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("11").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 11})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('11');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("12").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 12})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('12');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("13").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 13})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('13');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("14").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 14})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('14');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("15").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 15})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('15');
+          div.style.backgroundColor = clicked_color;
+      });
+      document.getElementById("16").addEventListener("click", function() {
+          // When the button is clicked, send a POST request to the backend
+          fetch('/button_clicked', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({value: 16})
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message); // Log the response from the backend
+              //alert(data.message); // Show an alert with the response message
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+          var div = document.getElementById('16');
+          div.style.backgroundColor = clicked_color;
+      });
+    });
+  </script>
+</body>
+</html>
